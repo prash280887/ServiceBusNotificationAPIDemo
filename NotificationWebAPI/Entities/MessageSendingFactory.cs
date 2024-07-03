@@ -12,6 +12,8 @@ namespace NotificationWebAPI.Entities
 {
     using System;
     using System.Text;
+    using System.Text.Json;
+    using Azure.Messaging.ServiceBus;
     using Microsoft.Azure.ServiceBus;
     using Microsoft.Azure.ServiceBus.Core;
 
@@ -57,7 +59,12 @@ namespace NotificationWebAPI.Entities
 
         }
 
-        public async Task SendMessageAsync(string messageBody)
+        /// <summary>
+        /// SERVICE BUS QUEUE METHOD 
+        /// </summary>
+        /// <param name="messageBody"></param>
+        /// <returns></returns>
+        public async Task SendMessageToServiceBusQueueAsync(string messageBody)
         {
             try
             {
@@ -75,5 +82,33 @@ namespace NotificationWebAPI.Entities
                 throw;
             }
         }
+
+        /// <summary>
+        /// SERVICE BUS TOPIC METHOD 
+        /// </summary>
+        /// <param name="messageBody"></param>
+        /// <returns></returns>
+        public async Task SendMessageToServiceBusTopicAsync(string messageBody)
+        {
+            try
+            {
+                // Assumes we write this to a database
+                var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+
+                var connectionString = "<YOUR CONNECTION STRING>"; // Use Managed Identity that I show in the Azure service Bus Queue 
+                var client = new ServiceBusClient(connectionString);
+                var sender = client.CreateSender("weather-forecast-added");
+                var body = JsonSerializer.Serialize(message);
+                var sbMessage = new ServiceBusMessage(body);
+                // sbMessage.ApplicationProperties.Add("Month", data.Date.ToString("MMMM"));
+                await sender.SendMessageAsync(sbMessage);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Error while sending message {DateTime.Now} :: Exception: {exception.Message}");
+                throw;
+            }
+        }
     }
 }
+

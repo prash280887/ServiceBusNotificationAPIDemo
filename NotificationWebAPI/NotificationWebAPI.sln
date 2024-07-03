@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationWebAPI", "NotificationWebAPI.csproj", "{5255A838-31C9-478D-8083-177218D46BC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationFunctionApp", "..\NotificationFunctionApp\NotificationFunctionApp.csproj", "{C14FB416-5A44-443E-B3AC-C47F120718D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationDataProcessor", "..\NotificationDataProcessor\NotificationDataProcessor.csproj", "{E4A9D4F7-9C53-4C7C-BEDC-5B3D225DDDA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5255A838-31C9-478D-8083-177218D46BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5255A838-31C9-478D-8083-177218D46BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5255A838-31C9-478D-8083-177218D46BC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C14FB416-5A44-443E-B3AC-C47F120718D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C14FB416-5A44-443E-B3AC-C47F120718D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C14FB416-5A44-443E-B3AC-C47F120718D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C14FB416-5A44-443E-B3AC-C47F120718D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A9D4F7-9C53-4C7C-BEDC-5B3D225DDDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A9D4F7-9C53-4C7C-BEDC-5B3D225DDDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A9D4F7-9C53-4C7C-BEDC-5B3D225DDDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A9D4F7-9C53-4C7C-BEDC-5B3D225DDDA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

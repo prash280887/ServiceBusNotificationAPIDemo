@@ -17,6 +17,8 @@
     {
         public QueueClient GetClient();
 
-        public Task SendMessageAsync(string messageBody);
-        
-    }
+        public Task SendMessageToServiceBusQueueAsync(string messageBody);
+
+        public Task SendMessageToServiceBusTopicAsync(string messageBody);
+
+}

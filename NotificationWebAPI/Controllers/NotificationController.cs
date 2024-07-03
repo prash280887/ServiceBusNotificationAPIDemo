@@ -29,12 +29,33 @@ namespace NotificationWebAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Route("SendNotification")]
-        public IActionResult SendNotification(string message)
+        [Route("SendNotificationToServiceBusQueue")]
+        public IActionResult SendNotificationToServiceBusQueue(string message)
         {
             // Write code to add message in the service bus queue
-            this._messageFactory.SendMessageAsync(message).GetAwaiter().GetResult();
-            this._logger.LogInformation($"Sending message: ");
+            this._messageFactory.SendMessageToServiceBusQueueAsync(message).GetAwaiter().GetResult();
+            this._logger.LogInformation($"Sending message: " + message);
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Send Notifiaction Message to Service Bus Topic 
+        /// service bus Message is then process by the Notification Logic App ( as setup in demo doc) to sent it as Email to the recipen specified in the message json
+        /// Eg. or Sample Input Notification Mesage Json format - 
+        /// { "MessageBody": "{\"EmailTo\":\"prakhour@microsoft.com\" , \"EmailCc\":\"prakhour@microsoft.com\" , \"MessageSubject\":\"Hello , Test Notification mail\" ,\"MessageBody\":\"Hello ,This is a test Notification mail\" }", " 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("SendNotificationToServiceBusTopic")]
+        public IActionResult SendNotificationToServiceBusTopic(string message)
+        {
+            // Write code to add message in the service bus queue
+            this._messageFactory.SendMessageToServiceBusTopicAsync(message).GetAwaiter().GetResult();
+            this._logger.LogInformation($"Sending message: " + message);
 
             return Ok();
         }
