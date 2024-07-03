@@ -15,7 +15,7 @@
     
     public interface IMessageSendingFactory
     {
-        public QueueClient GetClient();
+        public QueueClient GetSBQueueClient();
 
         public Task SendMessageToServiceBusQueueAsync(string messageBody);
 

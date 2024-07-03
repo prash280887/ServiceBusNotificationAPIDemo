@@ -27,7 +27,7 @@ namespace NotificationWebAPI.Entities
         /// </summary>
  
         private readonly ILogger<MessageSendingFactory> _logger;
-        private readonly AzureServiceBusConfiguration _serviceBusConfiguration;
+        private readonly AzureServiceBusQueueConfiguration _serviceBusQueueConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageSendingFactory" /> class.
@@ -36,8 +36,8 @@ namespace NotificationWebAPI.Entities
         public MessageSendingFactory(ILogger<MessageSendingFactory> logger, IConfiguration configuration)
         {
             this._logger = logger;    
-            this._serviceBusConfiguration = new AzureServiceBusConfiguration();
-            configuration.GetSection("AzureServiceBusConfiguration").Bind(this._serviceBusConfiguration);
+            this._serviceBusQueueConfiguration = new AzureServiceBusQueueConfiguration();
+            configuration.GetSection("AzureServiceBusConfiguration").Bind(this._serviceBusQueueConfiguration);
 
         }
 
@@ -48,13 +48,13 @@ namespace NotificationWebAPI.Entities
         /// <returns>
         ///   <see cref="QueueClient" />
         /// </returns>
-        public QueueClient GetClient()
+        public QueueClient GetSBQueueClient()
         {
             var newclient = new QueueClient(
-              _serviceBusConfiguration.ServiceBusConnectionString,
-                this._serviceBusConfiguration.QueueName,
-                (ReceiveMode)Enum.Parse(typeof(ReceiveMode), this._serviceBusConfiguration.ReceiveMode, true),
-                new RetryExponential(TimeSpan.FromSeconds(this._serviceBusConfiguration.MinBackOff), TimeSpan.FromSeconds(this._serviceBusConfiguration.MaxBackOff), this._serviceBusConfiguration.MaxRetryCount));
+              _serviceBusQueueConfiguration.ServiceBusConnectionString,
+                this._serviceBusQueueConfiguration.QueueName,
+                (ReceiveMode)Enum.Parse(typeof(ReceiveMode), this._serviceBusQueueConfiguration.ReceiveMode, true),
+                new RetryExponential(TimeSpan.FromSeconds(this._serviceBusQueueConfiguration.MinBackOff), TimeSpan.FromSeconds(this._serviceBusQueueConfiguration.MaxBackOff), this._serviceBusQueueConfiguration.MaxRetryCount));
              return newclient;
 
         }
@@ -68,7 +68,7 @@ namespace NotificationWebAPI.Entities
         {
             try
             {
-                ISenderClient senderClient = this.GetClient();
+                ISenderClient senderClient = this.GetSBQueueClient();
                 var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
                 this._logger.LogInformation($"Sending message: {messageBody}");
